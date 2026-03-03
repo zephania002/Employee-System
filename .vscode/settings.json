@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^powershell -Command \"\\(Get-Content JS/script\\.js\\) -replace 'editForm\\.editDob\\.value=e\\.dob;','editForm\\.editDob\\.value=e\\.dob;\\\\n        editForm\\.editDepartment\\.value = e\\.department \\|\\| '';\\\\n        editForm\\.editGender\\.value = e\\.gender \\|\\| '';' \\| Set-Content JS/script\\.js\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

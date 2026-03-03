@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS Dashboard</title>
+    <link rel="stylesheet" href="CSS/Style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- sidebar navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <h2>EMS</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#directory">Directory</a></li>
+                <li class="active"><a href="#summary">Summary</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#insights">Insights</a></li>
+                <li><a href="#quick-actions">Actions</a></li>
+                <li><a href="#activity">Activity</a></li>
+            </ul>
+        </nav>
+
+        <!-- main content area -->
+        <div class="main-content">
+            <header class="main-header">
+                <h1>Executive Dashboard</h1>
+                <button id="mobile-toggle" class="mobile-toggle">☰</button>
+            </header>
+
+            <section id="directory" class="section directory-section">
+                <h2>Employee Directory</h2>
+                <div class="controls-bar">
+                    <input type="text" id="searchInput" placeholder="Search by name or email" />
+                    <select id="sortSelect">
+                        <option value="name">Name (A-Z)</option>
+                        <option value="nameDesc">Name (Z-A)</option>
+                        <option value="salary">Salary (Low-High)</option>
+                        <option value="salaryDesc">Salary (High-Low)</option>
+                    </select>
+                </div>
+                <div class="emp-container">
+                    <div class="emp-list">
+                        <span class="emp-list-title">Employee List</span>
+                        <div class="emp-list-items"></div>
+                    </div>
+                    <div class="emp-detail">
+                        <span class="emp-detail-title">Details</span>
+                        <div class="emp-detail-info"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="summary" class="section summary-section">
+                <h2>Executive Summary</h2>
+                <div class="card-row">
+                    <div class="card" id="card-total">
+                        <span class="card-title">Total Employees</span>
+                        <span class="card-value" id="stat-total">0</span>
+                    </div>
+                    <div class="card" id="card-active">
+                        <span class="card-title">Active vs Inactive</span>
+                        <span class="card-value" id="stat-active">0 / 0</span>
+                    </div>
+                    <div class="card" id="card-depts">
+                        <span class="card-title">Departments</span>
+                        <span class="card-value" id="stat-depts">0</span>
+                    </div>
+                    <div class="card" id="card-payroll">
+                        <span class="card-title">Payroll This Month</span>
+                        <span class="card-value" id="stat-payroll">KSh 0</span>
+                    </div>
+                    <div class="card" id="card-attendance">
+                        <span class="card-title">Attendance Rate</span>
+                        <span class="card-value" id="stat-attendance">0%</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="analytics" class="section analytics-section">
+                <h2>Visual Analytics</h2>
+                <div class="chart-row">
+                    <div class="chart-card"><canvas id="deptChart"></canvas></div>
+                    <div class="chart-card"><canvas id="genderChart"></canvas></div>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-card"><canvas id="attendanceChart"></canvas></div>
+                    <div class="chart-card"><canvas id="salaryChart"></canvas></div>
+                </div>
+            </section>
+
+            <section id="insights" class="section insights-section">
+                <h2>Smart Insights</h2>
+                <ul class="insight-list">
+                    <li id="insight-turnover">Turnover risk: <span>-</span></li>
+                    <li id="insight-performance">Performance alerts: <span>-</span></li>
+                    <li id="insight-contract">Contract expiries: <span>-</span></li>
+                    <li id="insight-leave">Leave trends: <span>-</span></li>
+                </ul>
+            </section>
+
+            <section id="quick-actions" class="section actions-section">
+                <h2>Quick Actions</h2>
+                <div class="action-row">
+                    <button id="btn-add" class="action-btn">Add Employee</button>
+                    <button id="btn-approve-leave" class="action-btn">Approve Leave</button>
+                    <button id="btn-payroll" class="action-btn">Generate Payroll</button>
+                    <button id="btn-export" class="action-btn">Export Reports</button>
+                </div>
+            </section>
+
+            <section id="activity" class="section activity-section">
+                <h2>Recent Activity</h2>
+                <ul class="activity-list" id="activityList"></ul>
+            </section>
+
+            <footer class="main-footer">
+                <p>&copy; 2026 EMS Dashboard</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- modals remain similar to previous version but moved outside .dashboard -->
+    <div class="modal" id="addModal">
+        <form class="emp-form" id="addForm">
+            <h2>Add New Employee</h2>
+            <!-- fields same as before -->
+            <div class="form-row">
+                <input type="text" name="firstName" placeholder="First Name" required />
+                <input type="text" name="lastName" placeholder="Last Name" required />
+            </div>
+            <input type="text" name="imageUrl" placeholder="Image URL (optional)" />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="tel" name="contactNumber" placeholder="Contact" required />
+            <input type="number" name="salary" placeholder="Salary" required />
+            <input type="text" name="address" placeholder="Address" required />
+            <div class="form-row">
+                <select name="department" required>
+                    <option value="">Department</option>
+                    <option>HR</option>
+                    <option>Engineering</option>
+                    <option>Sales</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                </select>
+                <select name="gender" required>
+                    <option value="">Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <input type="date" name="dob" placeholder="Date of Birth" class="emp-form-dob" required />
+            <div class="form-actions">
+                <input type="submit" class="emp-form-submit" value="Add Employee" />
+                <button type="button" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="editModal">
+        <form class="emp-form" id="editForm">
+            <h2>Edit Employee</h2>
+            <input type="hidden" name="editId" />
+            <div class="form-row">
+                <input type="text" name="editFirstName" placeholder="First Name" required />
+                <input type="text" name="editLastName" placeholder="Last Name" required />
+            </div>
+            <input type="text" name="editImageUrl" placeholder="Image URL (optional)" />
+            <input type="email" name="editEmail" placeholder="Email" required />
+            <input type="tel" name="editContactNumber" placeholder="Contact" required />
+            <input type="number" name="editSalary" placeholder="Salary" required />
+            <input type="text" name="editAddress" placeholder="Address" required />
+            <div class="form-row">
+                <select name="editDepartment" required>
+                    <option value="">Department</option>
+                    <option>HR</option>
+                    <option>Engineering</option>
+                    <option>Sales</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                </select>
+                <select name="editGender" required>
+                    <option value="">Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <input type="date" name="editDob" placeholder="Date of Birth" class="emp-form-dob" required />
+            <div class="form-actions">
+                <input type="submit" class="emp-form-submit" value="Update Employee" />
+                <button type="button" class="cancel-btn edit-cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
